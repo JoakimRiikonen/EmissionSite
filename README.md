@@ -1,5 +1,6 @@
 # EmissionSite
 Site deployed on https://emissionsite.herokuapp.com/ (free model so the server is usually sleeping, first load takes a while)
+
 A website made with Python/Django that lets the user search carbon dioxide emissions by location. API for the website made with Django Rest Framework. Reaktors 'preliminary assignment for summer jobs in Turku' https://www.reaktor.com/preliminary-assignment-for-summer-jobs-turku/
 
 ## Features
