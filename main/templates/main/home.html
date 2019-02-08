@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<head>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+  <title>Emissions Website</title>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <h1>CO2 Emissions</h1>
+      <form method="POST">
+        {% csrf_token %}
+        <select class="form-control" name="country_name">
+          <option value="none">Choose a country/area</option>
+          {% for country in countries %}
+            <option value="{{ country }}">{{ country }}</option>
+          {% endfor %}
+        </select>
+        <p></p>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" name="percapita" value="1", id="capitaCheck">
+          <label class="form-check-label" for="capitaCheck">Per Capita</label>
+        </div>
+        <button type="submit" class="btn">Search</button>
+      </form>
+      {% if country_name == "none" %}
+      <h3>Emissions will appear below</h3>
+      {% elif percapita %}
+      <h3>Emissions in {{ country_name }} per capita:</h3>
+      {% else %}
+      <h3>Emissions in {{ country_name }}</h3>
+      {% endif %}
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Year</th>
+            <th scope="col">Emissions (1 000 000kg)</th>
+            <th scope="col">Population</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for entry in table %}
+              <tr>
+                <th scope="row">{{ entry.year }}</th>
+                <td>{{ entry.emissions }}</td>
+                <td>{{ entry.population }}</td>
+              </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
