@@ -27,6 +27,7 @@ def homepage(request):
     percapita = False
     countryemissions = []
 
+    # When user searches for a country
     if request.method == "POST":
         country_name = request.POST['country_name']
         percapita = 'percapita' in request.POST
@@ -45,6 +46,7 @@ def homepage(request):
                 dict['population'] = "No data" if o.population is None \
                                     else addSpaceToPop(o.population)
                 countryemissions.append(dict)
+        # else
         else:
             for o in EIY_list:
                 dict = {}
@@ -62,11 +64,13 @@ def homepage(request):
                 )
 
 
+# Get all data
 class AllView(generics.ListAPIView):
     queryset = EmissionInYear.objects.all()
     serializer_class = EIYserializer
 
 
+# Get data by country
 class CountryView(generics.ListAPIView):
     serializer_class = EIYserializer
 
@@ -75,6 +79,7 @@ class CountryView(generics.ListAPIView):
         return EmissionInYear.objects.filter(country_name=country)
 
 
+# Get data by year
 class YearView(generics.ListAPIView):
     serializer_class = EIYserializer
 
