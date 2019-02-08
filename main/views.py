@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from rest_framework import generics
+from .serializers import EIYserializer
 from main.models import EmissionInYear
 
 # Create your views here.
@@ -58,3 +60,24 @@ def homepage(request):
                 context={"countries":countries, "country_name":country_name,
                 "percapita":percapita, "table":countryemissions}
                 )
+
+
+class AllView(generics.ListAPIView):
+    queryset = EmissionInYear.objects.all()
+    serializer_class = EIYserializer
+
+
+class CountryView(generics.ListAPIView):
+    serializer_class = EIYserializer
+
+    def get_queryset(self):
+        country = self.kwargs['country']
+        return EmissionInYear.objects.filter(country_name=country)
+
+
+class YearView(generics.ListAPIView):
+    serializer_class = EIYserializer
+
+    def get_queryset(self):
+        year = self.kwargs['year']
+        return EmissionInYear.objects.filter(year=year)

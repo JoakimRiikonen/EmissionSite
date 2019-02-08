@@ -20,4 +20,7 @@ app_name = "main"
 
 urlpatterns = [
     path('', views.homepage, name="homepage"),
+    path('api', views.AllView.as_view(), name="listall"),
+    path('api/country/<str:country>', views.CountryView.as_view(), name="listcountry"),
+    path('api/year/<str:year>', views.YearView.as_view(), name="listyear")
 ]
